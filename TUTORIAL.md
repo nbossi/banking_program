@@ -6,7 +6,7 @@ Lorsque vous créez un programme, commencez par le diviser en sections simples q
 
 ---
 
-## 📌 Objectif
+### 📌 Objectif
 
 Créer un squelette fonctionnel d'un programme bancaire simple avec les fonctionnalités suivantes :
 
@@ -17,7 +17,7 @@ Créer un squelette fonctionnel d'un programme bancaire simple avec les fonction
 
 ---
 
-## 🔧 Déclaration des fonctions
+### 🔧 Déclaration des fonctions
 
 On commence par déclarer toutes les fonctions nécessaires :
 
@@ -32,7 +32,7 @@ def withdraw():
     pass  # Placeholder pour le retrait
 ```
 
-## 📦 Variables globales
+### 📦 Variables globales
 Nous définissons deux variables principales :
 
 ```python
@@ -40,7 +40,7 @@ balance = 0
 is_running = True  # Utilisé pour savoir quand quitter la boucle principale
 ```
 
-## 🔁 Boucle principale du programme
+### 🔁 Boucle principale du programme
 Nous allons créer une boucle principale qui s'exécute tant que l'utilisateur ne demande pas de quitter :
 
 ```python
@@ -77,20 +77,20 @@ La prochaine étape consiste à implémenter le contenu des fonctions show_balan
 Dans cette étape, nous allons transformer les fonctions "vides" de l'étape 1 en vraies fonctions fonctionnelles. L'idée est de leur faire effectuer leur rôle (afficher le solde, déposer, retirer), tout en gardant une structure claire, maintenable et sûre.
 
 ---
-## ⚠️ À faire attention lorsqu'on implémente les fonctions
+### ⚠️ À faire attention lorsqu'on implémente les fonctions
 
 Voici les points de vigilance à garder à l'esprit pour chaque fonction :
 
-### 1. `show_balance(balance)`
+#### 1. `show_balance(balance)`
 - ✅ Elle doit afficher correctement le solde actuel.
 - 🎯 Attention au format d'affichage : on utilise `:.2f` pour afficher deux décimales même si ce n’est pas obligatoire techniquement, c’est plus propre pour un montant d’argent.
 
-### 2. `deposit()`
+#### 2. `deposit()`
 - ✅ Elle demande un montant à l'utilisateur.
 - ⚠️ On doit convertir l’entrée utilisateur en float (nombre décimal), ce qui peut causer une erreur si l’utilisateur tape une chaîne invalide (ex : "abc").
 - 🔒 Il faut vérifier que le montant est positif. Un dépôt négatif n’a pas de sens : on retourne alors 0 ou on affiche un message d’erreur.
 
-### 3. `withdraw(balance)`
+#### 3. `withdraw(balance)`
 - ✅ Elle vérifie que le montant à retirer est disponible.
 - ⚠️ Deux vérifications importantes :
   - Le montant ne doit pas être supérieur au solde.
@@ -99,7 +99,7 @@ Voici les points de vigilance à garder à l'esprit pour chaque fonction :
 
 ---
 
-## 🔄 Pourquoi encapsuler le code dans une fonction `main()`
+### 🔄 Pourquoi encapsuler le code dans une fonction `main()`
 
 Au lieu d’écrire le code principal directement en dehors de toute fonction, on le place dans une fonction `main()` pour plusieurs raisons :
 
@@ -114,4 +114,33 @@ if __name__ == "__main__":
     main()
 ```
 
+## 🧩 Étape 3 : Input Error Handling & Menu Beautification
+Dans cette étape, on améliore deux aspects importants du programme bancaire : la gestion des erreurs d'entrée utilisateur et l'affichage du menu.
+---
+### ✅ Gestion des entrées utilisateur avec vérification d'erreurs
 
+Au lieu de laisser le programme planter ou se comporter de façon imprévisible en cas de mauvaise saisie, on ajoute :
+
+- Un bloc try/except dans les fonctions deposit() et withdraw() pour intercepter les erreurs de conversion (ex : si l'utilisateur tape "abc" au lieu d’un nombre).
+- La possibilité pour l'utilisateur de taper "quit" pour revenir au menu principal sans effectuer d'opération.
+
+➡ Exemple dans deposit() :
+
+```python
+user_input = input("Enter an amount to be deposited (or type 'quit' to return): ").strip()
+if user_input.lower() == "quit":
+    print("Returning to main menu.")
+    return 0
+try:
+    amount = float(user_input)
+    ...
+except ValueError:
+    print("Invalid input.")
+    return deposit()
+```
+### 🧱 Amélioration visuelle : délimitations et mise en forme
+Pour rendre l’interface utilisateur plus agréable :
+
+Une fonction add_delimitation() a été ajoutée pour afficher des lignes horizontales (ex : "------------------------------") séparant les différentes sections.
+Des titres comme "***** Section Deposit *****" permettent à l’utilisateur de mieux se repérer.
+Le menu est indenté avec des tabulations (\t) pour un affichage plus clair.
