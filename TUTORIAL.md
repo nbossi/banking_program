@@ -28,7 +28,7 @@ def show_balance():
 def deposit():
     pass  # Placeholder pour le dépôt
 
-def withdrawal():
+def withdraw():
     pass  # Placeholder pour le retrait
 ```
 
@@ -58,7 +58,7 @@ while is_running:
     elif choice == '2':
         deposit()
     elif choice == '3':
-        withdrawal()
+        withdraw()
     elif choice == '4':
         is_running = False  # Quitter la boucle
     else:
@@ -73,4 +73,45 @@ while is_running:
 
 La prochaine étape consiste à implémenter le contenu des fonctions show_balance, deposit et withdrawal.
 
-## 🧩 Étape 2 : Titre ? 
+## 🧩 Étape 2 : Implémentation des fonctions
+Dans cette étape, nous allons transformer les fonctions "vides" de l'étape 1 en vraies fonctions fonctionnelles. L'idée est de leur faire effectuer leur rôle (afficher le solde, déposer, retirer), tout en gardant une structure claire, maintenable et sûre.
+
+---
+## ⚠️ À faire attention lorsqu'on implémente les fonctions
+
+Voici les points de vigilance à garder à l'esprit pour chaque fonction :
+
+### 1. `show_balance(balance)`
+- ✅ Elle doit afficher correctement le solde actuel.
+- 🎯 Attention au format d'affichage : on utilise `:.2f` pour afficher deux décimales même si ce n’est pas obligatoire techniquement, c’est plus propre pour un montant d’argent.
+
+### 2. `deposit()`
+- ✅ Elle demande un montant à l'utilisateur.
+- ⚠️ On doit convertir l’entrée utilisateur en float (nombre décimal), ce qui peut causer une erreur si l’utilisateur tape une chaîne invalide (ex : "abc").
+- 🔒 Il faut vérifier que le montant est positif. Un dépôt négatif n’a pas de sens : on retourne alors 0 ou on affiche un message d’erreur.
+
+### 3. `withdraw(balance)`
+- ✅ Elle vérifie que le montant à retirer est disponible.
+- ⚠️ Deux vérifications importantes :
+  - Le montant ne doit pas être supérieur au solde.
+  - Le montant ne doit pas être négatif.
+- 🔁 Si l’un de ces cas est détecté, on retourne 0 pour éviter que le solde ne soit modifié par erreur.
+
+---
+
+## 🔄 Pourquoi encapsuler le code dans une fonction `main()`
+
+Au lieu d’écrire le code principal directement en dehors de toute fonction, on le place dans une fonction `main()` pour plusieurs raisons :
+
+### ✅ Lisibilité & organisation
+- Cela permet de structurer le programme de manière claire : les définitions en haut, la logique principale dans une seule fonction.
+
+### 🔁 Réutilisabilité
+- Si ce fichier est importé dans un autre fichier Python, le code ne sera pas exécuté automatiquement. Cela est rendu possible grâce à :
+
+```python
+if __name__ == "__main__":
+    main()
+```
+
+
