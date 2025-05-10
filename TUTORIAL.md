@@ -144,3 +144,5 @@ Pour rendre l’interface utilisateur plus agréable :
 Une fonction add_delimitation() a été ajoutée pour afficher des lignes horizontales (ex : "------------------------------") séparant les différentes sections.
 Des titres comme "***** Section Deposit *****" permettent à l’utilisateur de mieux se repérer.
 Le menu est indenté avec des tabulations (\t) pour un affichage plus clair.
+
+## Étape 4 (Bonus) : Historique des transactions

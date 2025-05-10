@@ -1,4 +1,5 @@
 from colorama import init, Fore, Style
+import datetime
 
 # Initialise colorama (utile sur Windows)
 init(autoreset=True)
@@ -55,7 +56,34 @@ def deposit():
     
 def withdraw(balance):
     return get_amount("Enter amount to be withdrawn (or type 'quit' to return): ", balance)
-    
+
+# Historique des transactions
+def init_transaction_history():
+    return []
+
+def record_transaction(transactions, type_, amount, balance):
+    transactions.append({
+        "type": type_,
+        "amount": amount,
+        "balance": balance,
+        "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    })
+    return transactions
+
+def show_transactions(transactions):
+    print_header("Transaction History")
+    if not transactions:
+        print("No transactions yet")
+    for idx, trans in enumerate(reversed(transactions[-5:]), 1):
+        if trans['type'] == "DEPOSIT":
+            color = Fore.GREEN
+        elif trans['type'] == "WITHDRAW":
+            color = Fore.RED
+        else:
+            color = ""
+        print(color + f"{idx}. {trans['timestamp']} | {trans['type']:8} | "
+              f"${trans['amount']:>9.2f} | Balance: ${trans['balance']:.2f}")
+        
 def main():
     add_delimitation('_', 40)
     print("\n" +Fore.CYAN + "Welcome to Your Banking App".center(40, " "))
@@ -63,6 +91,7 @@ def main():
 
     balance = 0
     is_running = True 
+    transactions = init_transaction_history()
 
     while is_running:
         print_menu()
@@ -78,16 +107,24 @@ def main():
         elif choice == '2':
             print_header("DEPOSIT")
             show_balance(balance)
-            balance += deposit()
+            amount = deposit()
+            if amount > 0:
+                balance += amount
+                transactions = record_transaction(
+                    transactions, "DEPOSIT", amount, balance)   
             show_balance(balance)
         elif choice == '3':
             print_header("WITHDRAW")
             show_balance(balance)
-            balance -= withdraw(balance)
+            amount = withdraw(balance)
+            if amount > 0:
+                balance -= amount
+                transactions = record_transaction(
+                    transactions, "WITHDRAW", -amount, balance)   
             show_balance(balance)
         elif choice == '4':
             print_header("TRANSACTIONS")
-            print("TODO ... sorry")
+            show_transactions(transactions)
         elif choice == '5':
             is_running = False 
             print(Fore.MAGENTA + "Exiting... Thank you for banking with us!")
