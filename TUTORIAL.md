@@ -146,3 +146,25 @@ Des titres comme "***** Section Deposit *****" permettent à l’utilisateur de 
 Le menu est indenté avec des tabulations (\t) pour un affichage plus clair.
 
 ## Étape 4 (Bonus) : Historique des transactions
+Pour rendre l'application plus complète, on peut ajouter une fonctionnalité qui permet à l'utilisateur de visualiser les 5 dernières transactions effectuées (dépôts ou retraits), avec horodatage et couleur selon le type d'opération.
+
+### ✅ Objectifs :
+- Stocker chaque transaction (type, montant, nouveau solde, date)
+- Afficher un historique clair et coloré
+- Utiliser une liste Python pour suivre les opérations
+
+### 💡 Fonctions ajoutées :
+```python
+def init_transaction_history()
+
+def record_transaction(transactions, type_, amount, balance)
+
+def show_transactions(transactions)
+```
+### 🧩 Intégration dans le programme principal :
+- Initialiser l'historique en début de programme 
+- Enregistrer une transaction après chaque dépôt ou retrait
+- Ajouter une nouvelle option dans le menu principal (4)
+- Et la fonction associée dans la boucle principale
+
+Cette amélioration permet à l'utilisateur de suivre ses opérations de manière lisible, et offre une première approche vers la gestion de logs ou d'historique dans les applications.
